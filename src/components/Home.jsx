@@ -13,13 +13,16 @@ function Home() {
   const [todo, setTodo] = useState([]);
   async function sendTodo() {
     const ans = await axios.post(
-      "http://localhost:3000/api/create",
+      "https://todobackend-73u6.onrender.com/api/create",
       {
         title: title,
       },
       {
         withCredentials: true, 
-      }
+         headers: {
+    "Content-Type": "application/json"
+  }
+      },
     );
     const newtodo = ans.data.todo;
     const addtodo = {
@@ -36,9 +39,11 @@ function Home() {
 
   useEffect(function gettodo() {
     async function fetch() {
-      const h = await axios.get("http://localhost:3000/api", {
+      const h = await axios.get("https://todobackend-73u6.onrender.com/api", {
         withCredentials: true, 
-      });
+           headers: {
+    "Content-Type": "application/json"
+  }});
       const final = h.data.ans;
       const inputtodo = final.map(function (e) {
         return {
@@ -61,13 +66,20 @@ function Home() {
     [todo]
   );
   async function deleteAll() {
-    const ans = await axios.delete("http://localhost:3000/api/delete");
+    const ans = await axios.delete("https://todobackend-73u6.onrender.com/api/delete",{
+          headers: {
+    "Content-Type": "application/json"
+  }
+        });
     setTodo([]);
   }
   const [today, setoday] = useState(new Date());
   async function logout(){
-    const ans= await axios.get("http://localhost:3000/api/logout",{
-        withCredentials: true 
+    const ans= await axios.get("https://todobackend-73u6.onrender.com/api/logout",{
+        withCredentials: true ,
+         headers: {
+    "Content-Type": "application/json"
+  }
     } )
     navigate('/')
   }
@@ -128,7 +140,7 @@ function Home() {
                 className="ml-4 w-5 h-5 border-2 border-gray-300 rounded checked:bg-emerald-500 checked:border-emerald-500 transition-all duration-200"
                 onClick={async function () {
                   const result = await axios.put(
-                    `http://localhost:3000/api/update/${e.id}`,
+                    `https://todobackend-73u6.onrender.com/api/update/${e.id}`,
                     {
                       done: !e.done,
                     }

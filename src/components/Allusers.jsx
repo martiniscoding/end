@@ -8,7 +8,7 @@ function Allusers() {
 
   useEffect(function () {
     async function getusers() {
-      const res = await axios.get("http://localhost:3000/api/seeusers", {
+      const res = await axios.get("https://todobackend-73u6.onrender.com/api/seeusers", {
         withCredentials: true
       })
       let users = res.data.ans

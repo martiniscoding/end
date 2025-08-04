@@ -8,7 +8,7 @@ function EditProfile() {
     let [profile , setProfile]= useState({})
     useEffect( function(){
         async function profile(){
-            const res= await axios.get("http://localhost:3000/api/profile",{
+            const res= await axios.get("https://todobackend-73u6.onrender.com/api/profile",{
                 withCredentials: true 
             })
         const profileData= res.data

@@ -52,10 +52,14 @@ export function Login() {
         
     }
     async function createAccount(){
-        const result = await axios.post("http://localhost:3000/api/signup" , {
+        const result = await axios.post("https://todobackend-73u6.onrender.com/api/signup" , {
             email: signup.email,
             username : signup.username,
             password: signup.password
+        },{
+          headers: {
+    "Content-Type": "application/json"
+  }
         })
         const ans= result.data.msg
         console.log(ans)
@@ -66,7 +70,7 @@ export function Login() {
       console.log(login)
       
       
-        const result = await axios.post ("http://localhost:3000/api/login", {
+        const result = await axios.post ("https://todobackend-73u6.onrender.com/api/login", {
             username: login.username,
             password: login.password
         },  {
