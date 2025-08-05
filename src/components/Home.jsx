@@ -97,7 +97,7 @@ function Home() {
   const minutes = today.getMinutes();
   const seconds = today.getSeconds();
 
-  return (
+   return (
   <div className="min-h-screen bg-gradient-to-br from-yellow-100 to-gray-50 p-2 sm:p-6 md:p-8">
     <div className="flex justify-center items-center bg-pink-100 p-4 sm:p-6 rounded-2xl shadow-lg mb-6 sm:mb-8">
       <img
@@ -106,7 +106,7 @@ function Home() {
         alt=""
       />
     </div>
-    
+
     <div className="text-2xl sm:text-4xl font-extrabold text-gray-800">
       <div className="flex flex-col sm:flex-row justify-center items-center gap-2">
         <span>
@@ -119,8 +119,8 @@ function Home() {
         >
           YES! I COMPLETED EVERYTHING
         </Button>
-        <Link to='/profile'>
-          <Button className='mt-2 sm:mt-0 sm:ml-2 bg-amber-300 hover:bg-green-500 font-semibold text-black'>
+        <Link to="/profile">
+          <Button className="mt-2 sm:mt-0 sm:ml-2 bg-amber-300 hover:bg-green-500 font-semibold text-black">
             Edit Profile
           </Button>
         </Link>
@@ -129,51 +129,62 @@ function Home() {
         {hours}:{minutes}:{seconds}
       </div>
     </div>
-    <div className="flex flex-col items-center justify-center my-8 sm:my-10 bg-white rounded-2xl p-4 sm:p-6 shadow-lg w-full max-w-lg sm:max-w-2xl mx-auto">
-      {todo.map(function (e) {
-        return (
-          <div key={e.id} className="text-base sm:text-xl flex flex-col sm:flex-row items-start sm:items-center p-2 sm:p-4 m-2 bg-gray-50 rounded-lg hover:shadow-md hover:translate-x-1 transition-all duration-200 w-full">
-            <span>
-              {e.id}. {e.title}
-            </span>
-            <div className="flex items-center mt-2 sm:mt-0 sm:ml-4">
-              <Checkbox
-                className="w-5 h-5 border-2 border-gray-300 rounded checked:bg-emerald-500 checked:border-emerald-500 transition-all duration-200"
-                onClick={async function () {
-                  const result = await axios.put(
-                    `https://todobackend-73u6.onrender.com/api/update/${e.id}`,
-                    { done: !e.done }
-                  );
-                  setTodo(function (prev) {
-                    return prev.map(function (tod) {
-                      return tod.id == e.id ? { ...tod, done: !tod.done } : tod;
+
+    {/* TODOS SECTION */}
+    <div className="my-8 sm:my-10 bg-white rounded-2xl p-4 sm:p-6 shadow-lg w-full max-w-lg sm:max-w-3xl mx-auto flex flex-col lg:flex-row lg:items-start lg:justify-start lg:gap-6">
+      <div className="w-full lg:w-2/3">
+        {todo.map(function (e) {
+          return (
+            <div
+              key={e.id}
+              className="text-base sm:text-xl flex flex-col sm:flex-row items-start sm:items-center p-2 sm:p-4 m-2 bg-gray-50 rounded-lg hover:shadow-md hover:translate-x-1 transition-all duration-200 w-full"
+            >
+              <span>
+                {e.id}. {e.title}
+              </span>
+              <div className="flex items-center mt-2 sm:mt-0 sm:ml-4">
+                <Checkbox
+                  className="w-5 h-5 border-2 border-gray-300 rounded checked:bg-emerald-500 checked:border-emerald-500 transition-all duration-200"
+                  onClick={async function () {
+                    const result = await axios.put(
+                      `https://todobackend-73u6.onrender.com/api/update/${e.id}`,
+                      { done: !e.done }
+                    );
+                    setTodo(function (prev) {
+                      return prev.map(function (tod) {
+                        return tod.id === e.id ? { ...tod, done: !tod.done } : tod;
+                      });
                     });
-                  });
-                }}
-              ></Checkbox>
-              {e.done ? (
-                <div className="ml-4 text-emerald-600 font-bold px-2 py-1 rounded bg-emerald-100">
-                  COMPLETED
-                </div>
-              ) : (
-                <div className="ml-4 text-red-600 font-bold px-2 py-1 rounded bg-red-100">
-                  PENDING
-                </div>
-              )}
+                  }}
+                ></Checkbox>
+                {e.done ? (
+                  <div className="ml-4 text-emerald-600 font-bold px-2 py-1 rounded bg-emerald-100">
+                    COMPLETED
+                  </div>
+                ) : (
+                  <div className="ml-4 text-red-600 font-bold px-2 py-1 rounded bg-red-100">
+                    PENDING
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
+
+    {/* TASK COUNTER */}
     <div className="font-extrabold text-2xl sm:text-3xl text-gray-800 flex justify-center items-center fixed left-1/2 bottom-32 -translate-x-1/2 bg-amber-100 p-2 sm:p-4 rounded-xl shadow-lg w-11/12 sm:max-w-md">
       TOTAL TASKS COMPLETED {donetodo} / {todo.length}
     </div>
+
+    {/* INPUT + BUTTONS */}
     <div className="fixed left-1/2 bottom-4 -translate-x-1/2 flex flex-col items-center justify-center w-full sm:w-11/12 sm:max-w-md px-2">
       <Textarea
         placeholder="Enter your task"
         className="w-full bg-pink-100 border-2 border-pink-300 text-gray-800 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-sky-200 transition-all duration-200"
         value={title}
-        onChange={function (e) { settitle(e.target.value); }}
+        onChange={(e) => settitle(e.target.value)}
       ></Textarea>
       <Button
         onClick={sendTodo}
@@ -183,15 +194,15 @@ function Home() {
       </Button>
 
       <div className="flex flex-col sm:flex-row justify-center gap-3 w-full mt-4">
-        <Link to='/allusers' className="w-full sm:w-auto">
-          <Button 
+        <Link to="/allusers" className="w-full sm:w-auto">
+          <Button
             className="w-full border-2 border-black hover:bg-green-600 hover:-translate-y-1 transition-all duration-300"
             variant="destructive"
           >
             See your COMPETITORS!
           </Button>
         </Link>
-        <Link to='/Login' className="w-full sm:w-auto">
+        <Link to="/Login" className="w-full sm:w-auto">
           <Button
             onClick={logout}
             className="w-full border-2 border-black hover:bg-green-600 hover:-translate-y-1 transition-all duration-300"
@@ -205,6 +216,7 @@ function Home() {
   </div>
 );
 
+ 
 }
 
 export default Home;
